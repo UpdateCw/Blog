@@ -2,6 +2,9 @@ package com.update.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.update.framework.model.BaseEntity;
@@ -24,14 +27,13 @@ public class Article extends BaseEntity {
         @Column
 		private String context;//内容
         
-        @Column
+        @ManyToOne(fetch = FetchType.EAGER)
+    	@JoinColumn(name = "type", referencedColumnName = "id", nullable = false)
 		private Type type=new Type();//类型
         
         @Column
 		private String label;//标签
         
-        @Column
-		private String sendTime;//发表时间
 		
 		
 		public String getTitle() {
@@ -58,13 +60,5 @@ public class Article extends BaseEntity {
 		public void setLabel(String label) {
 			this.label = label;
 		}
-		public String getSendTime() {
-			return sendTime;
-		}
-		public void setSendTime(String sendTime) {
-			this.sendTime = sendTime;
-		}
-		
-		
 		
 }

@@ -60,7 +60,7 @@ public class LogServiceImpl implements LogService{
 			log.setContent(updatecontent);
 			log.setCreateDate(new Date());
 			log.setUpdateDate(new Date());
-			/*logDao.save(log);*/
+			logDao.save(log);
 		}
 	}
 	

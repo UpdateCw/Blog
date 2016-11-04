@@ -11,12 +11,13 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.update.entity.Admin;
-import com.update.entity.Log;
+import com.update.entity.Type;
 import com.update.framework.action.BaseAction;
 import com.update.framework.common.CustomException;
 import com.update.framework.until.Constant;
 import com.update.system.service.AdminService;
 import com.update.system.service.LogService;
+import com.update.system.service.TypeService;
 
 /**
  * @author cw
@@ -26,7 +27,7 @@ import com.update.system.service.LogService;
 @Namespace(value = "/user")
 @Results({
 		@Result(name="input",location="/pages/login.jsp",type="redirect"),
-		@Result(name="isMain",location="/pages/index.jsp",type="redirect")
+		@Result(name="isMain",location="/pages/articleAdd.jsp")
 		})
 public class AdminAction extends BaseAction {
     private Logger logger=Logger.getLogger(this.getClass().getName()); 
@@ -35,6 +36,9 @@ public class AdminAction extends BaseAction {
 	
 	@Resource
 	private AdminService adminService;
+	
+	@Resource
+	private TypeService typeService;
 	
 	@Resource
 	private LogService logService;
@@ -61,10 +65,9 @@ public class AdminAction extends BaseAction {
 		}
 		
 		if(admin!=null){
-			Log log=new Log();
 			getSession().setAttribute(Constant.LOGIN, admin);
-			logService.addLog(getSession(), log, "登录成功");
 			logger.info("Operation： login success");
+			page=typeService.selectTypeList();
 			return "isMain";
 		}
 		return "input";

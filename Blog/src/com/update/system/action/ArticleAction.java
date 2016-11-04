@@ -1,17 +1,15 @@
 package com.update.system.action;
 
 import java.util.logging.Logger;
-
 import javax.annotation.Resource;
-
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-
 import com.update.entity.Article;
 import com.update.framework.action.BaseAction;
 import com.update.framework.common.CustomException;
+import com.update.system.service.ArticleService;
 import com.update.system.service.LogService;
 
 /**
@@ -19,10 +17,9 @@ import com.update.system.service.LogService;
  * @date 2016年6月12日 下午2:01:21
  * 文章action
  */
-@Namespace(value = "/user")
+@Namespace(value = "/article")
 @Results({
-		@Result(name="input",location="/pages/login.jsp",type="redirect"),
-		@Result(name="isMain",location="/pages/index.jsp",type="redirect")
+		@Result(name="article",location="/pages/article.jsp"),
 		})
 public class ArticleAction extends BaseAction {
     private Logger logger=Logger.getLogger(this.getClass().getName()); 
@@ -30,24 +27,36 @@ public class ArticleAction extends BaseAction {
 	private static final long serialVersionUID = 7675610277124547364L;
 	
 	@Resource
+	private ArticleService articleService;
+	
+	@Resource
 	private LogService logService;
 	
 	private Article article;
 
+	
+	@Action("selectArticle")
+	public String selectArticle() throws Exception{
+		page=articleService.selectArticleList();
+		return "article";
+	}
+	
 	/**
 	 * 添加文章信息
+	 * @throws Exception 
 	 */
 	@Action("saveOrUpdate")
-	public String saveOrUpdate(){
+	public String saveOrUpdate() throws Exception{
 		if(article==null){
-			throw new CustomException("没有文章信息");
+			throw new CustomException("文章信息不存在");
 		}
-		if(article.getId()==null){
-			
-		}
-		return null;
+		articleService.addArticle(article);
+		page=articleService.selectArticleList();
+		logger.info("Operation：acticle add success!");
+		return "article";
 	}
 
+	
 	public Article getArticle() {
 		return article;
 	}
