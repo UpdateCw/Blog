@@ -35,15 +35,10 @@ public class BaseEntity implements Serializable {
     /**
      * 创建时间
      */
-    @Temporal(TemporalType.TIMESTAMP)  
-    @Column(updatable = false)  
-  //  @CreationTimestamp   
     private Date createDate;
     /**
      * 更新时间
      */
-    @Temporal(TemporalType.TIMESTAMP) 
-   // @UpdateTimestamp  
     private Date updateDate;
     
     /**

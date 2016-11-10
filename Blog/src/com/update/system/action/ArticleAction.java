@@ -1,11 +1,15 @@
 package com.update.system.action;
 
+import java.util.Date;
 import java.util.logging.Logger;
+
 import javax.annotation.Resource;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+
 import com.update.entity.Article;
 import com.update.framework.action.BaseAction;
 import com.update.framework.common.CustomException;
@@ -50,6 +54,8 @@ public class ArticleAction extends BaseAction {
 		if(article==null){
 			throw new CustomException("文章信息不存在");
 		}
+		article.setCreateDate(new Date());
+		article.setUpdateDate(new Date());
 		articleService.addArticle(article);
 		page=articleService.selectArticleList();
 		logger.info("Operation：acticle add success!");

@@ -16,7 +16,6 @@
 	</head>
 	<body >
 		<section class="section-account">
-			<div class="img-backdrop" style="background-image: url('../../assets/img/img16.jpg')"></div>
 			<div class="spacer" style="margin-left:30%;width:50%;font-weight:bold;font-family:'楷体';padding:120px;">
 					<h2>带着责任做事</h2>
 					<h3 style="text-indent:120px">带着稳重的心态处事</h3>

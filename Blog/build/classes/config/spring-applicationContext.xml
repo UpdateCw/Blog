@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd  
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+    
+	<!-- 读取配置文件 -->
+	<bean id="configBean" class="com.update.framework.common.CustomPropertyConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+    
+    <!--druid连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="driverClassName" value="${db.driverClassName}" /> 
+		<property name="url" value="${db.url}" />  
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		<property name="initialSize" value="10" />
+		<property name="maxActive" value="100" />
+		<property name="maxWait" value="60000" />
+		<property name="minIdle" value="10" />
+		<property name="timeBetweenEvictionRunsMillis" value="14400" />
+    	<property name="minEvictableIdleTimeMillis" value="300000" />
+    	<property name="validationQuery" value="SELECT 'x'" />
+    	<property name="testWhileIdle" value="true" />
+    	<property name="testOnBorrow" value="true" />
+    	<property name="testOnReturn" value="true" />
+    	<property name="poolPreparedStatements" value="true" />
+    	<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+	</bean> 
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource" />  
+        <property name="hibernateProperties">  
+            <props> 
+			 	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>              
+                <prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.autoReconnect">true</prop>
+            </props>  
+        </property>
+		<property name="packagesToScan"><!-- name配置为annotatedPackages不行 -->
+			<list>
+			  <value>com.update*</value>
+			</list>
+		</property> 
+    </bean>  
+    
+    <!-- 采用注释的方式配置bean -->
+	<context:annotation-config />
+
+	 <!-- 注解驱动 -->
+	<context:component-scan base-package="*.*" />
+	<context:component-scan base-package="com.update" />
+  
+    <!--transactionManager-->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- Spring Annotation Transaction -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+     <!-- 配置hibernateTemplate模板 -->  
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">  
+        <property name="sessionFactory" ref="sessionFactory"></property>  
+    </bean> 
+</beans>  

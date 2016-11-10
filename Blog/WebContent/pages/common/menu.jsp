@@ -19,7 +19,7 @@
 				</div>
 			</div>
 		</header>
-			<div id="menubar" class="menubar-inverse ">
+			<div id="menubar" class="menubar-inverse " style="font:12px/1.5 arial;">
 				<div class="menubar-fixed-panel">
 					<div>
 						<a class="btn btn-icon-toggle btn-default menubar-toggle" data-toggle="menubar" href="javascript:void(0);">

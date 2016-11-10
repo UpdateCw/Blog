@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/pages/common/taglibs.jsp"%>
-<body class="menubar-hoverable header-fixed menubar-first full-content ">
+<body class="menubar-hoverable header-fixed menubar-first full-content " style="font:12px/1.5 arial;">
 	<%@ include file="/pages/common/menu.jsp"%>
 	<div id="base">
 		<div id="content">
