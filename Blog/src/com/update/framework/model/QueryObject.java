@@ -25,7 +25,7 @@ public abstract class QueryObject<T extends Serializable> implements IQueryObjec
 	/**
 	 * 分页条件的每页显示条数
 	 */
-	private int pageSize = 10;
+	private int pageSize = 3;
 	/**
 	 * 封装查询结果集的sql
 	 */

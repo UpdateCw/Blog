@@ -26,8 +26,8 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public Page<Article> selectArticleList() throws Exception {
-		ArticleQueryObject articleQueryObject=new ArticleQueryObject();
+	public Page<Article> selectArticleList(ArticleQueryObject articleQueryObject) throws Exception {
+		
 		return articleDao.findQueryResult(articleQueryObject);
 	}  
 }

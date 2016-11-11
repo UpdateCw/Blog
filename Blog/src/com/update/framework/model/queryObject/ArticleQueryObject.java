@@ -8,6 +8,7 @@ import com.update.framework.model.QueryObject;
 public class ArticleQueryObject extends QueryObject<Article>{
 	private String title;
 	private String label;
+	private String type;
 
 	public ArticleQueryObject() {
 		super(Article.class.getName());
@@ -24,6 +25,9 @@ public class ArticleQueryObject extends QueryObject<Article>{
         }
         if (StringUtils.hasText(label)) {
             addWhere("o.label = ? ",label);
+        }
+        if (StringUtils.hasText(type)) {
+            addWhere("o.type.name = ? ",type);
         }
 	}
 
@@ -42,4 +46,13 @@ public class ArticleQueryObject extends QueryObject<Article>{
 	public void setLabel(String label) {
 		this.label = label;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 }

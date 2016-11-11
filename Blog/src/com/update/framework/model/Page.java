@@ -48,7 +48,7 @@ public class Page<T extends Object> {
     public Page(int currentPage, int pageSize, int totalCount) {
         // 1.如果传入负数
         this.currentPageNo = currentPage < 1 ? 1 : currentPage;
-        this.pageSize = pageSize < 1 ? 10 : pageSize;
+        this.pageSize = pageSize < 1 ? 3 : pageSize;
         this.totalRows = totalCount;
         this.totalPage = (this.totalRows + this.pageSize - 1) / this.pageSize;
         // 3.处理当前页码必须小于总的页数

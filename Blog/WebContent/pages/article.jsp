@@ -23,8 +23,12 @@
 	 		        $('#myModal').modal();
 	 			}
 	 		});
-	     
 	    });
+		
+		$("#seachSubmit").click(function() {
+			$("#form").submit();
+		});
+
 	})
 	</script>
 	<%@ include file="/pages/common/menu.jsp"%>
@@ -41,12 +45,15 @@
 							</div>
 							<div class="widget-content">
 								<div class="row">
-									<div id="search">
-										<label> Search: <input type="text"
-											aria-controls="DataTables_Table_0">
-										</label>
-										<button class="example8 btn btn-primary" id="add">新增</button>
-									</div>
+									<s:form id="form" action="/article/selectArticle">
+										<input type="hidden" id="totalPage" value="${page.totalPage}" />
+										<input type="hidden" id="currentPageNo" name="articleQueryObject.currentPageNo" value="${page.currentPageNo}" />
+										<div id="search">
+											<label> Search: <input type="text" placeholder="类型..." ria-controls="DataTables_Table_0"></label>
+											<button class="example8 btn btn-primary" id="add">新增</button>
+											<button id="seachSubmit" class="example8 btn " name="articleQueryObject.type" >搜索</button>
+										</div>
+									</s:form>
 								</div>
 								<table
 									class="table table-sorting table-striped table-hover datatable"
@@ -61,15 +68,18 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${page.data}" var="ar" varStatus="xh">
-											<tr>
-												<td>${xh.count}</td>
-												<td>${ar.title}</td>
-												<td>${ar.context}</td>
-												<td>${ar.type.name}</td>
-												<td>${ar.label}</td>
-											</tr>
-										</c:forEach>
+									<!--10条。。数据,每页最多显示 12 条-->
+										<c:if test="${page.data ne null}">
+											<c:forEach items="${page.data}" var="ar" varStatus="xh">
+												<tr>
+													<td>${xh.count}</td>
+													<td>${ar.title}</td>
+													<td>${ar.context}</td>
+													<td>${ar.type.name}</td>
+													<td>${ar.label}</td>
+												</tr>
+											</c:forEach>
+										</c:if>
 									</tbody>
 								</table>
 							</div>
@@ -78,10 +88,12 @@
 							<div class="col-md-6">
 								<div class="dataTables_paginate paging_bootstrap">
 									<ul class="pagination">
-										<li class="prev disabled"><a href="#">←</a></li>
-										<li class="active"><a href="#">1</a></li>
-										<li><a href="#">2</a></li>
-										<li class="next"><a href="#">→</a></li>
+										<li class="prev"><a href="/article/selectArticle?pageNo=${page.currentPageNo-1}">←</a></li>
+										<li class="active"><a href="/article/selectArticle?pageNo=${page.currentPageNo}">${page.currentPageNo}</a></li>
+										<c:if test="${page.currentPageNo!=page.totalPage}">
+												<li><a href="/article/selectArticle?pageNo=${page.currentPageNo+1}">${page.currentPageNo+1}</a></li>
+										</c:if>
+										<li class="next"><a href="/article/selectArticle?pageNo=${page.currentPageNo+1}">→</a></li>
 									</ul>
 								</div>
 							</div>

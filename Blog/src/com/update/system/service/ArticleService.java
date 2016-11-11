@@ -2,6 +2,7 @@ package com.update.system.service;
 
 import com.update.entity.Article;
 import com.update.framework.model.Page;
+import com.update.framework.model.queryObject.ArticleQueryObject;
 
 /**
  * 日志业务逻辑接口
@@ -13,5 +14,6 @@ public interface ArticleService {
 
 	void addArticle(Article article) throws Exception;
 
-	Page<Article> selectArticleList() throws Exception;
+	Page<Article> selectArticleList(ArticleQueryObject articleQueryObject)
+			throws Exception;
 }

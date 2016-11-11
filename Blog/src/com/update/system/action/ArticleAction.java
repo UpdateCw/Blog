@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Results;
 import com.update.entity.Article;
 import com.update.framework.action.BaseAction;
 import com.update.framework.common.CustomException;
+import com.update.framework.model.queryObject.ArticleQueryObject;
 import com.update.system.service.ArticleService;
 import com.update.system.service.LogService;
 
@@ -36,12 +37,25 @@ public class ArticleAction extends BaseAction {
 	@Resource
 	private LogService logService;
 	
+	private  ArticleQueryObject articleQueryObject;
+	
 	private Article article;
 
 	
 	@Action("selectArticle")
 	public String selectArticle() throws Exception{
-		page=articleService.selectArticleList();
+		String pageNo=getRequest().getParameter("pageNo");
+		int pn=1;
+		if(pageNo!=null&&!"".equals(pageNo)){
+			pn=Integer.parseInt(pageNo);
+		}
+		
+		if(articleQueryObject==null){
+			articleQueryObject=new ArticleQueryObject();
+		}
+		
+		articleQueryObject.setCurrentPageNo(pn);
+		page=articleService.selectArticleList(articleQueryObject);
 		return "article";
 	}
 	
@@ -54,10 +68,13 @@ public class ArticleAction extends BaseAction {
 		if(article==null){
 			throw new CustomException("文章信息不存在");
 		}
+		if(articleQueryObject==null){
+			articleQueryObject=new ArticleQueryObject();
+		}
 		article.setCreateDate(new Date());
 		article.setUpdateDate(new Date());
 		articleService.addArticle(article);
-		page=articleService.selectArticleList();
+		page=articleService.selectArticleList(articleQueryObject);
 		logger.info("Operation：acticle add success!");
 		return "article";
 	}
