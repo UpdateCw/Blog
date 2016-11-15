@@ -11,8 +11,9 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.update.entity.Article;
-import com.update.framework.action.BaseAction;
+import com.update.framework.action.JsonAction;
 import com.update.framework.common.CustomException;
+import com.update.framework.model.Common;
 import com.update.framework.model.queryObject.ArticleQueryObject;
 import com.update.system.service.ArticleService;
 import com.update.system.service.LogService;
@@ -26,7 +27,7 @@ import com.update.system.service.LogService;
 @Results({
 		@Result(name="article",location="/pages/article.jsp"),
 		})
-public class ArticleAction extends BaseAction {
+public class ArticleAction extends JsonAction {
     private Logger logger=Logger.getLogger(this.getClass().getName()); 
 	
 	private static final long serialVersionUID = 7675610277124547364L;
@@ -52,9 +53,8 @@ public class ArticleAction extends BaseAction {
 		
 		if(articleQueryObject==null){
 			articleQueryObject=new ArticleQueryObject();
+			articleQueryObject.setCurrentPageNo(pn);
 		}
-		
-		articleQueryObject.setCurrentPageNo(pn);
 		page=articleService.selectArticleList(articleQueryObject);
 		return "article";
 	}
@@ -78,6 +78,16 @@ public class ArticleAction extends BaseAction {
 		logger.info("Operation：acticle add success!");
 		return "article";
 	}
+	
+	@Action("delete")
+	public String delete() throws Exception{
+		Long aid=Long.parseLong(getRequest().getParameter("id"));
+		article=new Article(); 
+		article.setId(aid);
+		articleService.deleteArticle(article);
+		responseData.setData(Common.INFO);
+		return "json";
+	}
 
 	
 	public Article getArticle() {
@@ -86,6 +96,13 @@ public class ArticleAction extends BaseAction {
 
 	public void setArticle(Article article) {
 		this.article = article;
+	}
+	public ArticleQueryObject getArticleQueryObject() {
+		return articleQueryObject;
+	}
+
+	public void setArticleQueryObject(ArticleQueryObject articleQueryObject) {
+		this.articleQueryObject = articleQueryObject;
 	}
 }
 

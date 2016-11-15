@@ -2,8 +2,11 @@
 	width:100%;border:1px solid #ffffff;
 }
 #search label{
-	float:left;
+	float:left;line-height: 20px;margin-top:5px;
 }
-#search button{
+#add{
 	float:right;
+}
+#seachSubmit{
+	float:left;margin-left:10px;
 }

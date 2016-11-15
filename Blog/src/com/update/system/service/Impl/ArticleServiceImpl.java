@@ -29,5 +29,10 @@ public class ArticleServiceImpl implements ArticleService{
 	public Page<Article> selectArticleList(ArticleQueryObject articleQueryObject) throws Exception {
 		
 		return articleDao.findQueryResult(articleQueryObject);
-	}  
+	} 
+	
+	public void deleteArticle(Article article) throws Exception {
+		articleDao.delete(Article.class, article.id);
+	}
+
 }

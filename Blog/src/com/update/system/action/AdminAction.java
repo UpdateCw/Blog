@@ -11,7 +11,6 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.update.entity.Admin;
-import com.update.entity.Type;
 import com.update.framework.action.BaseAction;
 import com.update.framework.common.CustomException;
 import com.update.framework.until.Constant;

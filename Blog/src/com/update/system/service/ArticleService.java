@@ -16,4 +16,6 @@ public interface ArticleService {
 
 	Page<Article> selectArticleList(ArticleQueryObject articleQueryObject)
 			throws Exception;
+
+	void deleteArticle(Article article) throws Exception;
 }

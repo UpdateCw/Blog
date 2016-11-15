@@ -16,6 +16,7 @@
 		<link type="text/css" rel="stylesheet" href="../css/theme-default/font-awesome.min.css" />
 		<link type="text/css" rel="stylesheet" href="../css/theme-default/material-design-iconic-font.min.css" />
 		<link type="text/css" rel="stylesheet" href="../css/theme-default/libs/summernote/summernote.css" />
+		<link type="text/css" rel="stylesheet" href="../js/dist/css/Lobibox.min.css">
 		<link type="text/css" rel="stylesheet" href="../css/style.css">
 		<script src="../js/libs/jquery/jquery-1.11.2.min.js"></script>
 		<script src="../js/libs/jquery/jquery-migrate-1.2.1.min.js"></script>
@@ -34,4 +35,6 @@
 		<script src="../js/core/source/AppVendor.js"></script>
 		<script src="../js/core/demo/Demo.js"></script>
 		<script src="../js/core/demo/DemoFormEditors.js"></script>
+		<script src="../js/dist/js/lobibox.min.js"></script>     
+		<script src="../js/dist/message/message.js"></script>     
 	</head>

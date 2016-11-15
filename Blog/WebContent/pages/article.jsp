@@ -8,6 +8,27 @@
 	</header>
 	<script type="text/javascript">
 	$(function(){
+		var IMG_PREFIX = '../img/';
+		
+		$("#seachSubmit").click(function() {
+			$("#seachform").submit();
+		});
+		
+		$(".delete").click(function(){
+			var id=$(this).parent().prev().html();
+			console.log(id);
+			$.ajax({
+	 			url:'/article/delete',
+	 			type:'get',
+	 			data:"id="+id,
+	 			dataType:'json',
+	 			success:function(data){
+	 				console.log(data);
+	 				showMessage("info","文章已被移除！");
+	 			}
+	 		});
+		});
+		
 		$("#add").click(function(){
 			$.ajax({
 	 			url:'/type/selectType',
@@ -25,10 +46,7 @@
 	 		});
 	    });
 		
-		$("#seachSubmit").click(function() {
-			$("#form").submit();
-		});
-
+		
 	})
 	</script>
 	<%@ include file="/pages/common/menu.jsp"%>
@@ -45,15 +63,14 @@
 							</div>
 							<div class="widget-content">
 								<div class="row">
-									<s:form id="form" action="/article/selectArticle">
-										<input type="hidden" id="totalPage" value="${page.totalPage}" />
+									<form id="seachform" action="/article/selectArticle" method="get">
 										<input type="hidden" id="currentPageNo" name="articleQueryObject.currentPageNo" value="${page.currentPageNo}" />
 										<div id="search">
-											<label> Search: <input type="text" placeholder="类型..." ria-controls="DataTables_Table_0"></label>
-											<button class="example8 btn btn-primary" id="add">新增</button>
-											<button id="seachSubmit" class="example8 btn " name="articleQueryObject.type" >搜索</button>
-										</div>
-									</s:form>
+											<label><input type="text" placeholder="类型..." ria-controls="DataTables_Table_0" name="articleQueryObject.type" ></label>
+											<button id="seachSubmit" class="example8 btn ">搜索</button>
+										 </div>
+									</form>
+									<button class="example8 btn btn-primary" id="add">新增</button>
 								</div>
 								<table
 									class="table table-sorting table-striped table-hover datatable"
@@ -61,10 +78,11 @@
 									<thead>
 										<tr>
 											<th>序号</th>
-											<th>标题</th>
-											<th>内容</th>
+											<th width="450px">标题</th>
+											<th width="700px">内容</th>
 											<th>类型</th>
 											<th>标签</th>
+											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -77,6 +95,11 @@
 													<td>${ar.context}</td>
 													<td>${ar.type.name}</td>
 													<td>${ar.label}</td>
+													<td hidden="hidden">${ar.id}</td>
+													<td>
+														<span class="example8 btn btn-primary delete">删除</span>
+														<span class="example8 btn btn-primary update">修改</span>
+													</td>
 												</tr>
 											</c:forEach>
 										</c:if>
